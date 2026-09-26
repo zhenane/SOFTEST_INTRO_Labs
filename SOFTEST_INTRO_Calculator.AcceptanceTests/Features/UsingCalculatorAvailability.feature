@@ -1,0 +1,42 @@
+@Availability
+Feature: UsingCalculatorAvailability
+In order to calculate MTBF and Availability
+As someone who struggles with maths
+I want to be able to use my calculator to do this
+
+Scenario: Calculating MTBF
+Given I have a calculator
+When I have entered 1000 and 4 into the calculator and press MTBF
+Then the result should be 250
+
+Scenario: Calculating Availability
+Given I have a calculator
+When I have entered 200 and 50 into the calculator and press Availability
+Then the result should be 0.8
+
+Scenario: Calculating Availability from named reliability values
+Given I have a calculator
+And the reliability values are
+| MTBF | MTTR |
+| 90 | 10 |
+When I calculate Availability from these values
+Then the result should be 0.9
+
+Scenario Outline: Reject invalid MTBF inputs
+Given I have a calculator
+When I have entered <hours> and <failures> into the calculator and press MTBF
+Then the calculation should be rejected
+Examples:
+| hours | failures |
+| 1000 | 0 |
+| 0 | 4 |
+
+Scenario Outline: Reject invalid Availability inputs
+Given I have a calculator
+When I have entered <mtbf> and <mttr> into the calculator and press Availability
+Then the calculation should be rejected
+Examples:
+| mtbf | mttr |
+| -1 | 10 |
+| 10 | -1 |
+| 0 | 0 |
