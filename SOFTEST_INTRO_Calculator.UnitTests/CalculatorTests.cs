@@ -116,11 +116,21 @@ Assert.That(result, Is.EqualTo(expected).Within(1e-9));
 [TestCase(10, 0, 5)]
 [TestCase(10, -1, 5)]
 [TestCase(10, 100, -0.001)]
-public void MusaFunctions_InvalidParameters_ThrowArgumentException(
+public void CurrentFailureIntensity_InvalidParameters_ThrowsArgumentException(
 double initialIntensity, double totalFailures, double executionTime)
 {
 Assert.That(() => _calculator.CurrentFailureIntensity(initialIntensity, totalFailures, executionTime),
 Throws.TypeOf<ArgumentException>());
+}
+
+[TestCase(0, 100, 5)]
+[TestCase(-1, 100, 5)]
+[TestCase(10, 0, 5)]
+[TestCase(10, -1, 5)]
+[TestCase(10, 100, -0.001)]
+public void ExpectedCumulativeFailures_InvalidParameters_ThrowsArgumentException(
+double initialIntensity, double totalFailures, double executionTime)
+{
 Assert.That(() => _calculator.ExpectedCumulativeFailures(initialIntensity, totalFailures, executionTime),
 Throws.TypeOf<ArgumentException>());
 }
